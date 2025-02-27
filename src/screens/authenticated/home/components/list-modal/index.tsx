@@ -1,104 +1,76 @@
 import React, { useState } from "react";
-import { Modal, View, Text, TextInput, TouchableOpacity, FlatList, ScrollView } from "react-native";
+import { Modal, View, ScrollView, Alert } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Button, CustomInput, Title } from "@/shared/index";
+import { hp } from "@/utils/responsiveHelper";
+import Colors from "@/constants/color";
+import { colors, icons } from "./listModalData";
 
-const colors = ["#FF3B30", "#FF9500", "#FFCC00", "#28CD41", "#007AFF", "#5856D6", "#AF52DE", "#8E8E93", "#D1D1D6", "#C7C7CC"];
-const icons = ["list", "bookmark", "gift", "graduation-cap", "book", "desktop", "heart", "home", "music", "gamepad"];
+type Props = {
+  visible: boolean;
+  onClose: () => void;
+  addNewList: (list: { name: string; color: string; icon: string; }) => void;
+};
 
-const ListCreationModal = ({ visible, onClose, addNewList }) => {
-  const [tab, setTab] = useState("new"); // "new" or "templates"
+const ListCreationModal = ({ visible, onClose, addNewList }: Props) => {
   const [listName, setListName] = useState("");
   const [selectedColor, setSelectedColor] = useState("#007AFF");
   const [selectedIcon, setSelectedIcon] = useState("list");
 
   const handleDone = () => {
-    if (listName.trim() === "") return;
+    if (!listName.trim()) {
+      Alert.alert("List Name Required", "Please enter a list name before saving.");
+      return;
+    }
 
-    addNewList({ name: listName, color: selectedColor, icon: selectedIcon, count: 0 });
-    setListName(""); // Reset input
-    onClose();
+    try {
+      addNewList({ name: listName, color: selectedColor, icon: selectedIcon });
+      setListName(""); // Reset input
+      onClose();
+    } catch (error) {
+      console.error("Error adding list:", error);
+      Alert.alert("Error", "Something went wrong while adding the list.");
+    }
   };
 
   return (
     <Modal visible={visible} animationType="slide" transparent={true}>
       <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "center", alignItems: "center" }}>
-        <View style={{ backgroundColor: "white", padding: 20, borderRadius: 15, width: 340 }}>
-
-          {/* Header with Tabs */}
-          <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 10 }}>
-            <TouchableOpacity onPress={() => setTab("new")}>
-              <Text style={{ fontSize: 16, fontWeight: tab === "new" ? "bold" : "normal" }}>New List</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setTab("templates")}>
-              <Text style={{ fontSize: 16, fontWeight: tab === "templates" ? "bold" : "normal" }}>Templates</Text>
-            </TouchableOpacity>
-          </View>
-
-          {tab === "new" ? (
-            <ScrollView>
-              {/* List Icon Preview */}
-              <View style={{ alignItems: "center", marginBottom: 10 }}>
-                <View style={{ width: 80, height: 80, borderRadius: 40, backgroundColor: selectedColor, justifyContent: "center", alignItems: "center" }}>
-                  <FontAwesome5 name={selectedIcon} size={36} color="white" />
-                </View>
+        <View style={{ backgroundColor:Colors.white, borderRadius: hp(2), width: "95%" }}>
+          <Button press={onClose} borderR={hp(1)} p={hp(3)}borderBW={hp(.1)} borderBC={Colors.cloudyGray}>
+            <Title font={'i700'} variant={'titleMedium'} textA={'left'}>Cancel</Title>
+          </Button>
+          <ScrollView contentContainerStyle={{padding:hp(2)}}>
+            {/* List Icon Preview */}
+            <View style={{ alignItems: "center", marginBottom: hp(2) }}>
+              <View style={{ width: hp(9), height: hp(9), borderRadius: hp(5), backgroundColor: selectedColor, justifyContent: "center", alignItems: "center" }}>
+                <FontAwesome5 name={selectedIcon} size={hp(4)} color={Colors.white} />
               </View>
-
-              {/* List Name Input */}
-              <TextInput
-                placeholder="List Name"
-                value={listName}
-                onChangeText={setListName}
-                style={{
-                  backgroundColor: "#F2F2F7", padding: 10, borderRadius: 8, fontSize: 16, textAlign: "center", color: "#000", marginBottom: 10
-                }}
-              />
-
-              {/* List Type Selection */}
-              <TouchableOpacity style={{
-                backgroundColor: "#F2F2F7", padding: 10, borderRadius: 8, flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 10
-              }}>
-                <Text style={{ fontSize: 16 }}>List Type</Text>
-                <Text style={{ fontSize: 16, color: "#007AFF" }}>Standard ⌵</Text>
-              </TouchableOpacity>
-
-              {/* Color Picker */}
-              <FlatList
-                horizontal
-                data={colors}
-                keyExtractor={(item) => item}
-                renderItem={({ item }) => (
-                  <TouchableOpacity onPress={() => setSelectedColor(item)} style={{ marginRight: 10 }}>
-                    <View style={{
-                      width: 32, height: 32, borderRadius: 16, backgroundColor: item,
-                      borderWidth: selectedColor === item ? 2 : 0, borderColor: "black"
-                    }} />
-                  </TouchableOpacity>
-                )}
-                style={{ marginBottom: 10 }}
-              />
-
-              {/* Icon Picker */}
-              <FlatList
-                numColumns={5}
-                data={icons}
-                keyExtractor={(item) => item}
-                renderItem={({ item }) => (
-                  <TouchableOpacity onPress={() => setSelectedIcon(item)} style={{ padding: 10 }}>
-                    <FontAwesome5 name={item} size={24} color={selectedIcon === item ? "#007AFF" : "#8E8E93"} />
-                  </TouchableOpacity>
-                )}
-              />
-
-              {/* Done Button */}
-              <TouchableOpacity onPress={handleDone} style={{ marginTop: 15, alignItems: "center" }}>
-                <Text style={{ fontSize: 18, color: "blue" }}>Done</Text>
-              </TouchableOpacity>
-            </ScrollView>
-          ) : (
-            <View>
-              <Text>Templates will be added here.</Text>
             </View>
-          )}
+            {/* List Name Input */}
+            <CustomInput placeholder="List Name" label="" value={listName} onChangeText={setListName} bg={Colors.lightGray} bgColor={Colors.lightGray} textAlign="center"/>
+            {/* Color Picker */}
+            <View style={{ flexDirection: "row", flexWrap: "wrap", rowGap: hp(1), backgroundColor:Colors.lightGray, padding:hp(1.5), borderRadius:hp(2) }}>
+              {colors.map((item, index) => (
+                <Button key={index} press={() => setSelectedColor(item)}>
+                  <View style={{padding: hp(1.9), borderRadius: hp(6), backgroundColor: item, marginRight: hp(1), borderWidth: selectedColor === item ? hp(.2) : 0, borderColor: Colors.black,}}
+                  />
+                </Button>
+              ))}
+            </View>
+            {/* Icon Picker */}
+            <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: hp(2.5), backgroundColor: Colors.lightGray, padding: hp(1.5), borderRadius: hp(2) }}>
+              {icons.map((item, index) => (
+                <Button key={index} press={() => setSelectedIcon(item)}>
+                  <FontAwesome5 name={item} size={hp(3)} color={selectedIcon === item ? selectedColor : Colors.mediumGray} style={{ margin: hp(1) }} />
+                </Button>
+              ))}
+            </View>
+            {/* Done Button */}
+            <Button press={handleDone} mt={hp(2.5)} bg={Colors.shadeBlue} p={hp(2)} itemAlign="center">
+              <Title font={'i700'} variant={'titleMedium'} color={Colors.white}>Done</Title>
+            </Button>
+          </ScrollView>
         </View>
       </View>
     </Modal>
