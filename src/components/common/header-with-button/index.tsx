@@ -15,7 +15,7 @@ type HeaderProps = {
 
 const HeaderWithButton = ({ title, buttonText = "Add Task", press, showButton=false }: HeaderProps) => {
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingBottom:hp(2) }}>
       <Title iconColor={Colors.shadeBlue} color={Colors.shadeBlue} showIcon={true} textA={'left'} font={'i700'} variant={'titleMedium'} width={hp(20)}>
         {title}
       </Title>

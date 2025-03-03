@@ -1,10 +1,12 @@
-import { View } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, FlatList, PanResponder } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { Button, Container, Title } from '@/shared/index'
 import { Text } from 'react-native-paper'
 import { AUTHENTICATED_PROPS } from '@/types/authenticatedType'
 import { hp } from '@/utils/responsiveHelper'
 import HeaderWithButton from '@/components/common/header-with-button'
+import { taskList } from '../datas'
+import TodayItem from './components/today-item'
 
 const Today = ({ navigation }: AUTHENTICATED_PROPS) => {
 
@@ -14,9 +16,35 @@ const Today = ({ navigation }: AUTHENTICATED_PROPS) => {
     })
   }, [])
 
+  // Filter tasks for "Today"
+  const todayTasksData = taskList.find(item => item.taskType === 'Today')?.task || [];
+
+  // Use state to manage today's tasks dynamically
+  const [todayTasks, setTodayTasks] = useState(todayTasksData);
+
+  // Function to delete a task
+  const deleteTask = (id: number) => {
+    const updatedTasks = todayTasks.filter(task => task.id !== id);
+    setTodayTasks(updatedTasks);
+  };
+
+  
+
   return (
     <Container padX={hp(2)}>
-      <HeaderWithButton title='Today Task' buttonText='' />
+      <HeaderWithButton title='Today’s Tasks' buttonText='' />
+      {todayTasks.length > 0 ? (
+        <FlatList
+          data={todayTasks}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (<TodayItem item={item} deleteTask={deleteTask}/>)}
+          contentContainerStyle={{paddingBottom:hp(2)}}
+        />
+      ) : (
+        <View style={{ padding: hp(2), alignItems: 'center' }}>
+          <Text variant='bodyLarge' style={{ color: 'gray' }}>No tasks for today</Text>
+        </View>
+      )}
     </Container>
   )
 }

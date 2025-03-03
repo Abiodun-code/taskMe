@@ -37,6 +37,8 @@ interface Props {
   borderBC?: string | undefined,
   width?: number | any,
   height?: number | undefined,
+  position?: string | undefined,
+  right?: string | undefined
 }
 
 const Button = ({
@@ -73,7 +75,9 @@ const Button = ({
   pv,
   borderBC,
   width,
-  height
+  height,
+  position,
+  right,
 }: Props) => {
 
   // Combine className and dynamic inline styles
@@ -108,6 +112,8 @@ const Button = ({
     borderBottomColor: borderBC,
     width: width,
     height: height,
+    position: position,
+    right:right,
     ...status
   };
 

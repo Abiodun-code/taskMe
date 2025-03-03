@@ -1,6 +1,6 @@
 import { FlatList, ScrollView, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import {Button, Container, SearchBar, Title} from '@/shared/index'
+import {Button, Container, Title} from '@/shared/index'
 import { AUTHENTICATED_PROPS } from '@/types/authenticatedType'
 import { hp } from '@/utils/responsiveHelper'
 import { taskList } from './datas'
@@ -9,6 +9,7 @@ import Colors from '@/constants/color'
 import {FontAwesome5, MaterialIcons} from "@expo/vector-icons"
 import ListCreationModal from './components/list-modal'
 import TaskList from './components/task-list'
+import SearchBar from '@/components/common/searchBar'
 
 const Home = ({navigation}: AUTHENTICATED_PROPS) => {
   const [searchText, setSearchText] = useState("");
