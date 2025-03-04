@@ -1,4 +1,5 @@
 import Home from "./home"
+import AddTask from "./home/add-task"
 import All from "./home/all"
 import Completed from "./home/completed"
 import Overdue from "./home/overdue"
@@ -11,5 +12,6 @@ export {
   Today,
   Completed,
   Overdue,
-  Scheduled
+  Scheduled,
+  AddTask,
 }

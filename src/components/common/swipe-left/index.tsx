@@ -34,7 +34,7 @@ const SwipeableItem = ({ children, onDelete }: Props) => {
     })
 
   return (
-    <View>
+     <GestureHandlerRootView style={{flex:1}}>
       <View style={styles.container}>
         {/* DELETE BUTTON */}
         <View style={styles.deleteButtonContainer}>
@@ -50,7 +50,7 @@ const SwipeableItem = ({ children, onDelete }: Props) => {
           </Animated.View>
         </GestureDetector>
       </View>
-    </View>
+    </GestureHandlerRootView>
   )
 }
 
@@ -84,5 +84,6 @@ const styles = StyleSheet.create({
   },
   swipeableContent: {
     flex: 1,
+
   },
 })

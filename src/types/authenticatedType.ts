@@ -7,6 +7,7 @@ export type AUTHENTICATED_PARAM = {
   Scheduled: undefined,
   Completed: undefined,
   Overdue: undefined,
+  AddTask: undefined,
 }
 
 export enum AUTHENTICATED_PATH {
@@ -15,7 +16,8 @@ export enum AUTHENTICATED_PATH {
   Today = "Today",
   Scheduled = "Scheduled",
   Completed = "Completed",
-  Overdue = "Overdue"
+  Overdue = "Overdue",
+  AddTask = "AddTask",
 }
 
 export interface AUTHENTICATED_PROPS {

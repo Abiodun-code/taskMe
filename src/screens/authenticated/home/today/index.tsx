@@ -2,7 +2,7 @@ import { View, FlatList, PanResponder } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Button, Container, Title } from '@/shared/index'
 import { Text } from 'react-native-paper'
-import { AUTHENTICATED_PROPS } from '@/types/authenticatedType'
+import { AUTHENTICATED_PATH, AUTHENTICATED_PROPS } from '@/types/authenticatedType'
 import { hp } from '@/utils/responsiveHelper'
 import HeaderWithButton from '@/components/common/header-with-button'
 import { taskList } from '../datas'
@@ -32,13 +32,15 @@ const Today = ({ navigation }: AUTHENTICATED_PROPS) => {
 
   return (
     <Container padX={hp(2)}>
-      <HeaderWithButton title='Today’s Tasks' buttonText='' />
+      <HeaderWithButton title='Today’s Tasks' buttonText='Add Task' showButton={true} press={()=>navigation.navigate(AUTHENTICATED_PATH.AddTask)} />
       {todayTasks.length > 0 ? (
         <FlatList
           data={todayTasks}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (<TodayItem item={item} deleteTask={deleteTask}/>)}
-          contentContainerStyle={{paddingBottom:hp(2)}}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <TodayItem item={item} deleteTask={deleteTask} />}
+            contentContainerStyle={{ flexGrow: 1, paddingBottom: hp(2) }}
+            showsVerticalScrollIndicator={true}
+            keyboardShouldPersistTaps="handled"
         />
       ) : (
         <View style={{ padding: hp(2), alignItems: 'center' }}>

@@ -1,4 +1,4 @@
-import { All, Completed, Home, Overdue, Scheduled, Today } from "@/screens/authenticated";
+import { AddTask, All, Completed, Home, Overdue, Scheduled, Today } from "@/screens/authenticated";
 import { AUTHENTICATED_PATH } from "@/types/index";
 
 export const AUTHENTICATED_STACK = [
@@ -31,5 +31,10 @@ export const AUTHENTICATED_STACK = [
     id: 5,
     name: AUTHENTICATED_PATH.Overdue,
     screen: Overdue
+  },
+  {
+    id: 6,
+    name: AUTHENTICATED_PATH.AddTask,
+    screen: AddTask
   }
 ]

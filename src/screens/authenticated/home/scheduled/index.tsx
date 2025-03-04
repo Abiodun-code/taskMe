@@ -2,7 +2,7 @@ import { View, FlatList } from 'react-native'
 import React, { useEffect } from 'react'
 import { Button, Container, Title } from '@/shared/index'
 import { Text } from 'react-native-paper'
-import { AUTHENTICATED_PROPS } from '@/types/authenticatedType'
+import { AUTHENTICATED_PATH, AUTHENTICATED_PROPS } from '@/types/authenticatedType'
 import { hp } from '@/utils/responsiveHelper'
 import HeaderWithButton from '@/components/common/header-with-button'
 import { taskList } from '../datas'
@@ -20,7 +20,7 @@ const Scheduled = ({ navigation }: AUTHENTICATED_PROPS) => {
 
   return (
     <Container padX={hp(2)}>
-      <HeaderWithButton title='Scheduled Tasks' buttonText='' />
+      <HeaderWithButton title='Scheduled Tasks' buttonText='Add Task' showButton press={()=>navigation.navigate(AUTHENTICATED_PATH.AddTask)} />
       {scheduledTasks.length > 0 ? (
         <FlatList
           data={scheduledTasks}

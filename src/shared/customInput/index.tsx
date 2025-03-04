@@ -10,6 +10,9 @@ interface CustomTextProps extends TextInputProps {
   mb?: number
   bg?: any,
   bgColor?: any,
+  textA?: any,
+  textAV?:any,
+  minHeight?: any
 }
 const CustomInput: React.FC<CustomTextProps> = ({
   label,
@@ -17,12 +20,15 @@ const CustomInput: React.FC<CustomTextProps> = ({
   mb,
   bg,
   bgColor,
+  textA,
+  textAV,
+  minHeight,
   ...props
 }) => {
 
   return (
     <View style={{ marginBottom: mb || hp(2.5), flexDirection: 'row' }}>
-      <TextInput label={label} style={{ backgroundColor: bgColor || Colors.white, fontSize: hp(1.9), flex: 1 }}
+      <TextInput label={label} style={{ backgroundColor: bgColor || Colors.white, fontSize: hp(1.9), flex: 1, textAlign: textA, minHeight: minHeight, textAlignVertical: textAV}}
         outlineStyle={{ borderRadius: hp(1.5), borderColor: bg || Colors.gray }} mode='outlined'
         textColor={Colors.black} activeOutlineColor={Colors.black} disabled={disabled}
         {...props}

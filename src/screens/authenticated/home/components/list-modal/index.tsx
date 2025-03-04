@@ -48,7 +48,7 @@ const ListCreationModal = ({ visible, onClose, addNewList }: Props) => {
               </View>
             </View>
             {/* List Name Input */}
-            <CustomInput placeholder="List Name" label="" value={listName} onChangeText={setListName} bg={Colors.lightGray} bgColor={Colors.lightGray} textAlign="center"/>
+            <CustomInput placeholder="List Name" label="" value={listName} onChangeText={setListName} bg={Colors.lightGray}  bgColor={Colors.lightGray} textA="center"/>
             {/* Color Picker */}
             <View style={{ flexDirection: "row", flexWrap: "wrap", rowGap: hp(1), backgroundColor:Colors.lightGray, padding:hp(1.5), borderRadius:hp(2) }}>
               {colors.map((item, index) => (

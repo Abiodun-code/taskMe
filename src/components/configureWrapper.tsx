@@ -28,7 +28,7 @@ const ConfigureWrapper = ({children}:{children:React.ReactNode}) => {
   }
 
   const fontConfig = {
-    fontFamily: 'i400',
+    fontFamily: 'i500',
   };
 
   const theme = {
